@@ -19,6 +19,7 @@ try
 {
     // создание новой директории
     DirectoryInfo dirInfo = new DirectoryInfo(@"C:\new folder 1");
+    
     if (!dirInfo.Exists)
         dirInfo.Create();
     // dirInfo.CreateSubdirectory("new folder 2");
@@ -29,10 +30,10 @@ try
     Console.WriteLine($"Корневой каталог: {dirInfo.Root}");
 
     string newPath = @"C:\test\";
-    if (dirInfo.Exists && Directory.Exists(newPath))
+
+    if (dirInfo.Exists && !Directory.Exists(newPath))
         dirInfo.MoveTo(newPath);
-    else
-        
+
 
     Console.ReadKey();
     dirInfo.Delete(true);
@@ -41,8 +42,22 @@ try
 catch (Exception ex)
 { Console.WriteLine(ex.Message); }
 
+//Задание 8.2.4
+//Создайте на рабочем столе папку testFolder. Напишите метод, с помощью которого можно будет переместить её в корзину. 
+DirectoryInfo testFolder = new DirectoryInfo(@"C:\Users\Dmitry Lazarenko\Desktop\testFolder");
+if (!testFolder.Exists)
+    testFolder.Create();
+Console.ReadKey();
+DeleteFolder(testFolder);
 
-
+static void DeleteFolder(DirectoryInfo path)
+{
+    if (path.Exists)
+    {
+        path.Delete();
+        Console.WriteLine($"Каталог {path.FullName} удален");
+    }
+}
 static void GetCatalogs()
 {
     string dirName = @"C:\"; // Прописываем путь к корневой директории Windows
