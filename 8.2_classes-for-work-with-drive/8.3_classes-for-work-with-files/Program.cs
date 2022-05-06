@@ -39,3 +39,16 @@ using (StreamReader sr = File.OpenText(codePath))
         Console.WriteLine(str);
     }
 }
+//Задание 8.3.2
+//Сделайте так, чтобы ваша программа из задания 8.3.1 при каждом запуске добавляла в свой исходный код
+//комментарий о времени последнего запуска. 
+FileInfo code = new FileInfo(codePath);
+using (StreamWriter sw = code.AppendText())
+{
+    sw.WriteLine();
+    sw.WriteLine($"// Последний запуск программы: {DateTime.Now}");
+}
+
+// Последний запуск программы: 06.05.2022 13:19:38
+
+// Последний запуск программы: 06.05.2022 13:19:56
