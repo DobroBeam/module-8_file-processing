@@ -8,29 +8,24 @@ namespace FinalTask
     {
         static void Main(string[] args)
         {
-            const string link = @"Students.dat";
-            Binary file = new Binary(link);
-            file.Read();
-        }
-        public static string[] GetList(Student[] objArray)
-        {
-            string[] Groups = new string[objArray.Length];
-            
-
-            for (int i = 0; i<objArray.Length; i++)
-            {                
+            const string linkSource = @"Students.dat"; // ссылка на файл для считывания данных
+            const string linkCast = @"C:\Users\Dmitry Lazarenko\Desktop\Students"; // ссылка на папку для сохранения данных
+            Binary file = new Binary(linkSource);
+            Directory.CreateDirectory(linkCast);
+            foreach (Student student in file.Read())
+            {
+                string GroupFile = linkCast + @"\" + student.Group + ".txt"; // типовая ссылка на текстовый файл с номером группы
+                using (StreamWriter sw = File.AppendText(GroupFile)) // запись в файл данных из массива Student[]
                 {
-                    Groups[i] = objArray[i].Group;
-                    continue;
-                }           
+                    sw.WriteLine($"{student.Name}, {student.DateOfBirth}");
+                }                    
             }
-            return Groups; 
-        }
+            Console.WriteLine($"\nФайлы созданы в папке: {linkCast}") ;
+        }       
     }
 
     class Binary
     {
-
         string filepath;
 
         public Binary(string path)
@@ -38,7 +33,7 @@ namespace FinalTask
             filepath = path;
         }
 
-        public void Read()
+        public Student[] Read()
         {
             if (File.Exists(filepath))
             {
@@ -53,14 +48,17 @@ namespace FinalTask
                     {
                         Console.WriteLine($"Имя: {student.Name} --- Группа: {student.Group} --- Дата рождения: {student.DateOfBirth}");
                     }
-                    Program.GetList(newStudents);
+                    return newStudents;
                 }
+            }
+            else
+            {
+                Console.WriteLine($"Файл не найден:{filepath}");
+                return null;
             }
         }        
     }
-
     
-
     [Serializable]
     class Student
     {
