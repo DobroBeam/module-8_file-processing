@@ -12,9 +12,19 @@ namespace FinalTask
             Binary file = new Binary(link);
             file.Read();
         }
-        public static void GetList<T>(T objArray)
+        public static string[] GetList(Student[] objArray)
         {
+            string[] Groups = new string[objArray.Length];
+            
 
+            for (int i = 0; i<objArray.Length; i++)
+            {                
+                {
+                    Groups[i] = objArray[i].Group;
+                    continue;
+                }           
+            }
+            return Groups; 
         }
     }
 
@@ -43,7 +53,7 @@ namespace FinalTask
                     {
                         Console.WriteLine($"Имя: {student.Name} --- Группа: {student.Group} --- Дата рождения: {student.DateOfBirth}");
                     }
-                    Program.GetList<Student[]>(newStudents);
+                    Program.GetList(newStudents);
                 }
             }
         }        
