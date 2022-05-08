@@ -24,6 +24,39 @@ using (var fs = new FileStream("myPets.dat", FileMode.OpenOrCreate))
 Console.ReadLine();
 
 
+
+
+//Задание 8.4.3
+//Дан класс.Доработайте его и сериализуйте в бинарный формат.
+// объект для сериализации
+var contact = new Contact("John", 1234567890, "test@mail.com");
+Console.WriteLine("Объект создан");
+// создаем объект куда будем помещать объект для сериализации/десериализации
+BinaryFormatter formatter2 = new BinaryFormatter();
+
+// получаем поток, куда будем записывать сериализованный объект
+using (var fs = new FileStream("myContacts.dat", FileMode.OpenOrCreate))
+{
+    // указываем объекту formatter куда и что будем сериализовывать
+    formatter2.Serialize(fs, contact);
+    Console.WriteLine("Объект сериализован");
+}
+
+[Serializable]
+class Contact
+{
+    public string Name { get; set; }
+    public long PhoneNumber { get; set; }
+    public string Email { get; set; }
+
+    public Contact(string name, long phoneNumber, string email)
+    {
+        Name = name;
+        PhoneNumber = phoneNumber;
+        Email = email;
+    }
+}
+
 [Serializable]
 class Pet
 {
